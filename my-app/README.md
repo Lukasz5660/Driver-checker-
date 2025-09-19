@@ -74,6 +74,15 @@ npm run build
 3. Visit the URL printed by Vite (usually `http://localhost:5173`) to see the frontend
    displaying the backend health status.
 
+### Run both servers together (PowerShell)
+
+If you're using Windows PowerShell, you can start the backend and frontend together with a
+single command. The backend process is automatically stopped when you exit Vite.
+
+```powershell
+npm run dev:all
+```
+
 ## Available API routes
 
 | Method | Route         | Description                     |
