@@ -1,69 +1,84 @@
-# React + TypeScript + Vite
+# Driver Checker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Driver Checker is a lightweight starter kit that combines a React + TypeScript + Vite
+frontend with a Python Flask backend. Use it as a foundation for building a richer driver
+monitoring or telematics experience.
 
-Currently, two official plugins are available:
+## Project structure
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+my-app/
+├── backend/            # Flask backend service
+│   ├── app.py          # Application entry point and routes
+│   └── requirements.txt
+├── public/
+├── src/                # React application source
+└── vite.config.ts      # Vite configuration (includes API proxy for development)
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Prerequisites
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- [Node.js](https://nodejs.org/) 18 or newer
+- [Python](https://www.python.org/) 3.10 or newer
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Backend (Flask)
+
+Install dependencies and run the server:
+
+```bash
+python -m venv .venv
+source .venv/bin/activate  # On Windows use: .venv\Scripts\activate
+pip install -r backend/requirements.txt
+python backend/app.py
 ```
+
+The backend listens on `http://localhost:5000` by default and exposes a simple health
+endpoint at `GET /api/status`.
+
+### Configuration
+
+The backend recognises the following environment variables:
+
+| Variable          | Description                                                                 |
+| ----------------- | --------------------------------------------------------------------------- |
+| `PORT`            | Overrides the default port (`5000`).                                       |
+| `FRONTEND_ORIGIN` | Restricts CORS access to the provided origin (defaults to allowing all).    |
+
+## Frontend (React + Vite)
+
+Install dependencies and start the development server:
+
+```bash
+npm install
+npm run dev
+```
+
+The Vite dev server proxies `/api` requests to the Flask backend. For production builds or
+when the backend runs on another host, set the `VITE_API_BASE_URL` environment variable in
+an `.env` file:
+
+```
+VITE_API_BASE_URL=http://localhost:5000
+```
+
+Then build the frontend with:
+
+```bash
+npm run build
+```
+
+## Development workflow
+
+1. Start the Flask backend (`python backend/app.py`).
+2. In another terminal, run the React dev server (`npm run dev`).
+3. Visit the URL printed by Vite (usually `http://localhost:5173`) to see the frontend
+   displaying the backend health status.
+
+## Available API routes
+
+| Method | Route         | Description                     |
+| ------ | ------------- | ------------------------------- |
+| GET    | `/api/status` | Returns the backend health info |
+
+This structure gives you a solid jumping-off point for building out your own Driver
+Checker features.
