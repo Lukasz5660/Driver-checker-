@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:all": "powershell -NoProfile -ExecutionPolicy Bypass -Command \"& { $backend = Start-Process -FilePath python -ArgumentList 'backend/app.py' -PassThru; try { npm run dev } finally { if ($backend -and -not $backend.HasExited) { Stop-Process -Id $backend.Id } } }\"",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"

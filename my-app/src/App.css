@@ -1,42 +1,142 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+.app {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+header {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+header h1 {
+  margin: 0;
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  color: #0369a1;
+  letter-spacing: -0.02em;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+header p {
+  margin: 0 auto;
+  max-width: 720px;
+  color: #334155;
+  font-size: 1.05rem;
+}
+
+.status-card {
+  background: #ffffff;
+  border-radius: 1.25rem;
+  padding: 2rem;
+  box-shadow:
+    0 20px 45px -20px rgba(15, 23, 42, 0.35),
+    0 10px 25px -15px rgba(15, 23, 42, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.status-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.status-card h2 {
+  margin: 0;
+  font-size: 1.6rem;
+  color: #0f172a;
+}
+
+.status-card button {
+  border: none;
+  border-radius: 999px;
+  padding: 0.55rem 1.5rem;
+  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+  box-shadow: 0 10px 25px -15px rgba(14, 165, 233, 0.8);
+}
+
+.status-card button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 18px 30px -18px rgba(2, 132, 199, 0.8);
+}
+
+.status-card button:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+  box-shadow: none;
+}
+
+.status-loading {
+  margin: 0;
+  color: #0369a1;
+  font-weight: 600;
+}
+
+.status-error {
+  margin: 0;
+  color: #dc2626;
+  font-weight: 600;
+}
+
+.status-summary {
+  margin: 0;
+  display: grid;
+  gap: 1rem;
+}
+
+.status-summary > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.4rem;
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0.08), rgba(14, 165, 233, 0));
+  border-radius: 0.85rem;
+  padding: 1rem 1.15rem;
+}
+
+.status-summary dt {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #64748b;
+}
+
+.status-summary dd {
+  margin: 0;
+  font-size: 1.15rem;
+  color: #0f172a;
+  word-break: break-word;
+}
+
+.status-indicator {
+  font-weight: 700;
+}
+
+.status-ok {
+  color: #16a34a;
+}
+
+.status-bad {
+  color: #dc2626;
+}
+
+@media (max-width: 600px) {
+  .status-card {
+    padding: 1.75rem 1.25rem;
   }
-  to {
-    transform: rotate(360deg);
+
+  .status-summary > div {
+    padding: 0.9rem 1rem;
   }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
 }
